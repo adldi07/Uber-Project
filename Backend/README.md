@@ -218,3 +218,102 @@ This endpoint is used to log out the authenticated user.
       "message": "Unauthorized"
     }
     ```
+
+### POST /captian/register
+
+#### Description
+This endpoint is used to register a new captain.
+
+#### Request Body
+The request body must be a JSON object containing the following fields:
+- `fullName` (object, required): An object containing the captain's full name.
+  - `firstName` (string, required): The first name of the captain. Must be at least 3 characters long.
+  - `lastName` (string, optional): The last name of the captain. Must be at least 3 characters long if provided.
+- `email` (string, required): The email address of the captain. Must be a valid email format.
+- `password` (string, required): The password for the captain. Must be at least 6 characters long.
+- `vehicle` (object, required): An object containing the vehicle details.
+  - `color` (string, required): The color of the vehicle. Must be at least 3 characters long.
+  - `plate` (string, required): The plate number of the vehicle. Must be at least 3 characters long.
+  - `capacity` (number, required): The capacity of the vehicle. Must be at least 1.
+  - `vehicleType` (string, required): The type of the vehicle. Must be one of 'car', 'auto', or 'motorcycle'.
+
+#### Example Request
+```json
+{
+  "fullName": {
+    "firstName": "John",
+    "lastName": "Doe"
+  },
+  "email": "john.doe@example.com",
+  "password": "password123",
+  "vehicle": {
+    "color": "Red",
+    "plate": "ABC123",
+    "capacity": 4,
+    "vehicleType": "car"
+  }
+}
+```
+
+#### Responses
+
+- **201 Created**
+  - **Description**: Captain successfully registered.
+  - **Body**: A JSON object containing the authentication token and captain details.
+  - **Example**:
+    ```json
+    {
+      "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+      "captian": {
+        "_id": "60c72b2f9b1e8b001c8e4d5a",
+        "fullName": {
+          "firstName": "John",
+          "lastName": "Doe"
+        },
+        "email": "john.doe@example.com",
+        "vehicle": {
+          "color": "Red",
+          "plate": "ABC123",
+          "capacity": 4,
+          "vehicleType": "car"
+        },
+        "status": "Inactive"
+      }
+    }
+    ```
+
+- **400 Bad Request**
+  - **Description**: Invalid input data.
+  - **Body**: A JSON object containing the validation errors.
+  - **Example**:
+    ```json
+    {
+      "errors": [
+        {
+          "msg": "Invalid email",
+          "param": "email",
+          "location": "body"
+        },
+        {
+          "msg": "First name must have at least 3 characters",
+          "param": "fullName.firstName",
+          "location": "body"
+        },
+        {
+          "msg": "Password must have at least 6 characters",
+          "param": "password",
+          "location": "body"
+        }
+      ]
+    }
+    ```
+
+- **500 Internal Server Error**
+  - **Description**: An error occurred on the server.
+  - **Body**: A JSON object containing the error message.
+  - **Example**:
+    ```json
+    {
+      "message": "An error occurred while processing your request."
+    }
+    ```
