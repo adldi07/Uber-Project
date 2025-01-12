@@ -152,3 +152,69 @@ The request body must be a JSON object containing the following fields:
       "message": "An error occurred while processing your request."
     }
     ```
+
+### GET /users/profile
+
+#### Description
+This endpoint is used to get the profile of the authenticated user.
+
+#### Headers
+- `Authorization` (string, required): The Bearer token for authentication.
+
+#### Responses
+
+- **200 OK**
+  - **Description**: User profile retrieved successfully.
+  - **Body**: A JSON object containing the user details.
+  - **Example**:
+    ```json
+    {
+      "_id": "60c72b2f9b1e8b001c8e4d5a",
+      "fullName": {
+        "firstName": "John",
+        "lastName": "Doe"
+      },
+      "email": "john.doe@example.com",
+      "socketId": null
+    }
+    ```
+
+- **401 Unauthorized**
+  - **Description**: Authentication failed or token is invalid.
+  - **Body**: A JSON object containing the error message.
+  - **Example**:
+    ```json
+    {
+      "message": "Unauthorized"
+    }
+    ```
+
+### GET /users/logout
+
+#### Description
+This endpoint is used to log out the authenticated user.
+
+#### Headers
+- `Authorization` (string, required): The Bearer token for authentication.
+
+#### Responses
+
+- **200 OK**
+  - **Description**: User successfully logged out.
+  - **Body**: A JSON object containing a success message.
+  - **Example**:
+    ```json
+    {
+      "message": "User logged out successfully"
+    }
+    ```
+
+- **401 Unauthorized**
+  - **Description**: Authentication failed or token is invalid.
+  - **Body**: A JSON object containing the error message.
+  - **Example**:
+    ```json
+    {
+      "message": "Unauthorized"
+    }
+    ```
