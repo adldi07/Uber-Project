@@ -317,3 +317,153 @@ The request body must be a JSON object containing the following fields:
       "message": "An error occurred while processing your request."
     }
     ```
+
+### POST /captian/login
+
+#### Description
+This endpoint is used to log in an existing captain.
+
+#### Request Body
+The request body must be a JSON object containing the following fields:
+- `email` (string, required): The email address of the captain. Must be a valid email format.
+- `password` (string, required): The password for the captain. Must be at least 6 characters long.
+
+#### Example Request
+```json
+{
+  "email": "john.doe@example.com",
+  "password": "password123"
+}
+```
+
+#### Responses
+
+- **200 OK**
+  - **Description**: Captain successfully logged in.
+  - **Body**: A JSON object containing the authentication token and captain details.
+  - **Example**:
+    ```json
+    {
+      "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+      "captian": {
+        "_id": "60c72b2f9b1e8b001c8e4d5a",
+        "fullName": {
+          "firstName": "John",
+          "lastName": "Doe"
+        },
+        "email": "john.doe@example.com",
+        "vehicle": {
+          "color": "Red",
+          "plate": "ABC123",
+          "capacity": 4,
+          "vehicleType": "car"
+        },
+        "status": "Inactive"
+      }
+    }
+    ```
+
+- **400 Bad Request**
+  - **Description**: Invalid input data.
+  - **Body**: A JSON object containing the validation errors.
+  - **Example**:
+    ```json
+    {
+      "errors": [
+        {
+          "msg": "Invalid email",
+          "param": "email",
+          "location": "body"
+        },
+        {
+          "msg": "Password must have at least 6 characters",
+          "param": "password",
+          "location": "body"
+        }
+      ]
+    }
+    ```
+
+- **500 Internal Server Error**
+  - **Description**: An error occurred on the server.
+  - **Body**: A JSON object containing the error message.
+  - **Example**:
+    ```json
+    {
+      "message": "An error occurred while processing your request."
+    }
+    ```
+
+### GET /captian/profile
+
+#### Description
+This endpoint is used to get the profile of the authenticated captain.
+
+#### Headers
+- `Authorization` (string, required): The Bearer token for authentication.
+
+#### Responses
+
+- **200 OK**
+  - **Description**: Captain profile retrieved successfully.
+  - **Body**: A JSON object containing the captain details.
+  - **Example**:
+    ```json
+    {
+      "captian": {
+        "_id": "60c72b2f9b1e8b001c8e4d5a",
+        "fullName": {
+          "firstName": "John",
+          "lastName": "Doe"
+        },
+        "email": "john.doe@example.com",
+        "vehicle": {
+          "color": "Red",
+          "plate": "ABC123",
+          "capacity": 4,
+          "vehicleType": "car"
+        },
+        "status": "Inactive"
+      }
+    }
+    ```
+
+- **401 Unauthorized**
+  - **Description**: Authentication failed or token is invalid.
+  - **Body**: A JSON object containing the error message.
+  - **Example**:
+    ```json
+    {
+      "message": "Unauthorized"
+    }
+    ```
+
+### GET /captian/logout
+
+#### Description
+This endpoint is used to log out the authenticated captain.
+
+#### Headers
+- `Authorization` (string, required): The Bearer token for authentication.
+
+#### Responses
+
+- **200 OK**
+  - **Description**: Captain successfully logged out.
+  - **Body**: A JSON object containing a success message.
+  - **Example**:
+    ```json
+    {
+      "message": "Captain logged out successfully"
+    }
+    ```
+
+- **401 Unauthorized**
+  - **Description**: Authentication failed or token is invalid.
+  - **Body**: A JSON object containing the error message.
+  - **Example**:
+    ```json
+    {
+      "message": "Unauthorized"
+    }
+    ```
