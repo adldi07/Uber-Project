@@ -11,7 +11,7 @@ module.exports.registerCaptian = async (req, res, next )=>{
         return res.status(400).json({errors: errors.array()});
     }
 
-    const {fullName , email , password , vehicle} = req.body;
+    const {captianName , email , password , vehicle} = req.body;
     const captianAlreadyExist = await captianModel.findOne({email});
     if(captianAlreadyExist){
         return res.status(400).json({message:'Captian already exit with this email id'});
@@ -20,8 +20,8 @@ module.exports.registerCaptian = async (req, res, next )=>{
     const hashedPassword = await captianModel.hashPassword(password);
 
     const captian = await captianService.createCaptian({
-        firstName:fullName.firstName,
-        lastName:fullName.lastName,
+        firstName:captianName.firstName,
+        lastName:captianName.lastName,
         email ,
         password:hashedPassword,
         color:vehicle.color,

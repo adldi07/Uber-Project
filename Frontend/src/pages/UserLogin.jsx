@@ -1,6 +1,9 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { useState  } from "react";
+import { useState , useContext } from "react";
+import { UserDataContext } from "../contexts/UserContext";
+import { useNavigate } from "react-router-dom";
+
 
 function UserLogin(){
 
@@ -8,12 +11,17 @@ function UserLogin(){
     const [password , setPassword ] = useState('');
     const [userData , setUserData ] = useState({});
 
+    const { user , setUser } = useContext(UserDataContext);
+
     const submitHandler = (e)=>{
         e.preventDefault();
         setUserData({
             email:email ,
             password:password, 
         })
+
+
+
         // console.log(email , password);
         setEmail('');
         setPassword('');

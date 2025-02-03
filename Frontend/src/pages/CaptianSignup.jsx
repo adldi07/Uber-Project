@@ -23,7 +23,7 @@ function CaptianSignup(){
         setLastName('');
         setEmail('');
         setPassword('');
-        console.log(captianData);
+        // console.log(captianData);
     }
 
     return (
