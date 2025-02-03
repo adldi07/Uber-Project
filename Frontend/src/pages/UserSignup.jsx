@@ -14,7 +14,7 @@ function UserSignup(){
 
     const navigate = useNavigate();
 
-    const {user, setUser} = useContext(UserDataContext);
+    const { user, setUser } = useContext(UserDataContext);
 
     const submitHandler = async (e)=>{
         e.preventDefault()
@@ -38,7 +38,7 @@ function UserSignup(){
           // console.log(data.user);
           setUser(data.user)
 
-          
+
           console.log(user);
 
           navigate('/home')

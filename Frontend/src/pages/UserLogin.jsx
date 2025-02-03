@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { useState , useContext } from "react";
 import { UserDataContext } from "../contexts/UserContext";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 
 function UserLogin(){
@@ -12,13 +13,29 @@ function UserLogin(){
     const [userData , setUserData ] = useState({});
 
     const { user , setUser } = useContext(UserDataContext);
+    const navigate = useNavigate();
 
-    const submitHandler = (e)=>{
+    const submitHandler = async (e)=>{
         e.preventDefault();
-        setUserData({
-            email:email ,
-            password:password, 
-        })
+        // setUserData({
+        //     email:email ,
+        //     password:password, 
+        // })
+
+        const userData = {
+          email: email ,
+          password: password
+        }
+
+        const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/users/login`,userData);
+        
+        if(response.status === 200 ){
+          const data = response.data;
+          setUser(data.user);
+          console.log(data.user);
+          // console.log(user);
+          navigate('/home');  
+        }
 
 
 
