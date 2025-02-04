@@ -38,10 +38,10 @@ function UserSignup(){
           // console.log(data.user);
           setUser(data.user)
 
+          localStorage.setItem('token',data.token);
+          // console.log(data);
 
-          console.log(user);
-
-          navigate('/home')
+          navigate('/home') 
         }
 
         setFirstName('');

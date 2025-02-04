@@ -10,13 +10,13 @@ module.exports.authUser = async (req, res, next )=>{
     // console.log(token);
 
     if(!token){
-        return res.status(401).json({message: "Unauthorised"});
+        return res.status(401).json({message: "Unauthorised not present in headers"});
     }   
 
     const isBlacklisted = await blacklistTokenModel.findOne({token: token });
 
     if(isBlacklisted){
-        return res.status(401).json({message :"Unauthorized "});
+        return res.status(401).json({message :"Unauthorized blacklisted"});
     }
 
     

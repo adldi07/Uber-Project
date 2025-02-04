@@ -1,5 +1,8 @@
-import React, { useState } from "react";
+import React, { useState , useContext } from "react";
 import { Link } from "react-router-dom";
+import { CaptianDataContext } from "../contexts/captianContext";
+import  { useNavigate } from 'react-router-dom'
+import axios from "axios";
 
 function CaptianSignup(){
 
@@ -7,18 +10,44 @@ function CaptianSignup(){
     const [ password, setPassword ] = useState('')
     const [ firstName, setFirstName ] = useState('')
     const [ lastName, setLastName ] = useState('')
-    const [ captianData, setCaptianData ] = useState({})
 
-    const submitHandler = (e)=>{
+    const [ vehicleColor, setVehicleColor ] = useState('')
+    const [ vehiclePlate, setVehiclePlate ] = useState('')
+    const [ vehicleCapacity, setVehicleCapacity ] = useState('')
+    const [ vehicleType, setVehicleType ] = useState('')
+
+    // const [ captianData, setCaptianData ] = useState({})
+    const { captian , setCaptian } = useContext(CaptianDataContext);
+    const navigate = useNavigate();
+
+    const submitHandler = async(e)=>{
         e.preventDefault()
-        setCaptianData({
+        const captianData = {
             captianName:{
                 firstName:firstName,
                 lastName:lastName,
             },
-            email:email,
+            email:email,    
             password: password,
-        })
+            vehicle: {
+              color: vehicleColor,
+              plate: vehiclePlate,
+              capacity: vehicleCapacity,
+              vehicleType: vehicleType
+            }
+        }
+
+        const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/captian/register`, captianData);
+
+        if(response.status === 201){
+          const data = response.data;
+          // console.log(data);
+          setCaptian(data.captian)
+          // console.log(captian)
+          localStorage.setItem('token',data.token);
+          navigate('/captian-home');
+        }
+
         setFirstName('');
         setLastName('');
         setEmail('');
@@ -83,10 +112,59 @@ function CaptianSignup(){
                   required type="password"
                   placeholder='password'
                 />
-    
+
+                <h3 className='text-lg font-medium mb-2'>Vehicle Information</h3>
+                <div className='flex gap-4 mb-7'>
+                  <input
+                    required
+                    className='bg-[#eeeeee] w-1/2 rounded-lg px-4 py-2 border text-lg placeholder:text-base'
+                    type="text"
+                    placeholder='Vehicle Color'
+                    value={vehicleColor}
+                    onChange={(e) => {
+                      setVehicleColor(e.target.value)
+                    }}
+                  />
+                  <input
+                    required
+                    className='bg-[#eeeeee] w-1/2 rounded-lg px-4 py-2 border text-lg placeholder:text-base'
+                    type="text"
+                    placeholder='Vehicle Plate'
+                    value={vehiclePlate}
+                    onChange={(e) => {
+                      setVehiclePlate(e.target.value)
+                    }}
+                  />
+                </div>
+                <div className='flex gap-4 mb-7'>
+                  <input
+                    required
+                    className='bg-[#eeeeee] w-1/2 rounded-lg px-4 py-2 border text-lg placeholder:text-base'
+                    type="number"
+                    placeholder='Vehicle Capacity'
+                    value={vehicleCapacity}
+                    onChange={(e) => {
+                      setVehicleCapacity(e.target.value)
+                    }}
+                  />
+                  <select
+                    required
+                    className='bg-[#eeeeee] w-1/2 rounded-lg px-4 py-2 border text-lg placeholder:text-base'
+                    value={vehicleType}
+                    onChange={(e) => {
+                      setVehicleType(e.target.value)
+                    }}
+                  >
+                    <option value="" disabled>Select Vehicle Type</option>
+                    <option value="car">Car</option>
+                    <option value="auto">Auto</option>
+                    <option value="moto">Moto</option>
+                  </select>
+                </div>
+          
                 <button
                   className='bg-[#111] text-white font-semibold mb-3 rounded-lg px-4 py-2 w-full text-lg placeholder:text-base'
-                >Create account</button>
+                >Create Captian account</button>
     
               </form>
               <p className='text-center'>Already have a account? <Link to='/captian-login' className='text-blue-600'>Login here</Link></p>

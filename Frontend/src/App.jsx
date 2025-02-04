@@ -6,6 +6,12 @@ import UserLogin from "./pages/UserLogin";
 import UserSignup from "./pages/UserSignup";
 import CaptianLogin from "./pages/CaptianLogin";
 import CaptianSignup from "./pages/CaptianSignup";
+import { UserProtectedWrapper } from "./pages/UserProtectedWrapper.jsx";
+// import User from './pages/UserLogout.jsx'
+import UserLogout from "./pages/UserLogout.jsx";
+import { CaptianHome } from "./pages/CaptianHome.jsx";
+import { CaptianProtectedWrapper } from "./pages/CaptianProtectedWrapper.jsx";
+import { CaptianLogout } from "./pages/CaptianLogout.jsx";
 
 function App(){
   return <div >
@@ -15,7 +21,26 @@ function App(){
       <Route path ='/signup' element={<UserSignup/>} />
       <Route path ='/captian-login' element={<CaptianLogin/>} />
       <Route path ='/captian-signup' element={<CaptianSignup/>} />
-      <Route path ='/home' element={<Home/>} />
+      <Route path ='/home' element={
+        <UserProtectedWrapper>
+          <Home/>
+        </UserProtectedWrapper>
+      } />
+      <Route path ='/user/logout' element={
+        <UserProtectedWrapper>
+          <UserLogout/>
+        </UserProtectedWrapper>
+      } />
+      <Route path ='/captian-home' element={
+        <CaptianProtectedWrapper>
+          <CaptianHome/>
+        </CaptianProtectedWrapper>
+      } />
+      <Route path ='/captian-logout' element={
+        <CaptianProtectedWrapper>
+          <CaptianLogout/>
+        </CaptianProtectedWrapper>
+      } />
     </Routes>
   </div>
 }

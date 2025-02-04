@@ -32,8 +32,12 @@ function UserLogin(){
         if(response.status === 200 ){
           const data = response.data;
           setUser(data.user);
-          console.log(data.user);
-          // console.log(user);
+          // console.log(data);
+          // console.log(data.user);
+          // console.log(data.token);
+
+          localStorage.setItem('token',data.token);
+
           navigate('/home');  
         }
 
