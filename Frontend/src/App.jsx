@@ -12,13 +12,22 @@ import UserLogout from "./pages/UserLogout.jsx";
 import { CaptianHome } from "./pages/CaptianHome.jsx";
 import { CaptianProtectedWrapper } from "./pages/CaptianProtectedWrapper.jsx";
 import { CaptianLogout } from "./pages/CaptianLogout.jsx";
+import Riding from './pages/Riding'
+import CaptianRiding from './pages/CaptianRiding'
+import 'remixicon/fonts/remixicon.css'
 
 function App(){
   return <div >
     <Routes>
       <Route path ='/' element={<Start/>} />
       <Route path ='/login' element={<UserLogin/>} />
+      <Route path='/riding' element={<Riding />} />
+
+
+      <Route path='/captain-riding' element={<CaptianRiding />} />
+
       <Route path ='/signup' element={<UserSignup/>} />
+      
       <Route path ='/captian-login' element={<CaptianLogin/>} />
       <Route path ='/captian-signup' element={<CaptianSignup/>} />
       <Route path ='/home' element={
